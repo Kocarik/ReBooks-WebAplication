@@ -1,0 +1,24 @@
+﻿body {
+}
+
+footer {    
+    background-color: #1352D2;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    clear: both;
+}
+
+ header{
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        padding: 20px;
+ }
+
+ #signupLink{
+     margin-right: 20px; float: right;
+ }
+
+ #loginLink{
+     margin-right: 20px; float: right;
+ }
