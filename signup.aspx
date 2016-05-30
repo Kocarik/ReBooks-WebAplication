@@ -9,11 +9,20 @@
                 Register
             </div>
             <div class="control-group">
-                <!-- Email -->
-                <label class="control-label" for="Fullname">Fullname</label>
+                <!-- First name -->
+                <label class="control-label" for="firstName">First Name</label>
                 <div class="controls">
-                    <input type="text" runat="server" id="fullname" class="input-xlarge fullname">
-                    <p class="help-block">Please enter your full name</p>
+                    <input type="text" runat="server" id="firstName" class="input-xlarge firstName"/>
+                    <p class="help-block">Please enter your first name</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <!-- Last name -->
+                <label class="control-label" for="lastName">Last Name</label>
+                <div class="controls">
+                    <input type="text" runat="server" id="lastName" class="input-xlarge lastName"/>
+                    <p class="help-block">Please enter your last name</p>
                 </div>
             </div>
 
@@ -36,7 +45,7 @@
             </div>
 
             <div class="control-group">
-                <!-- Password -->
+                <!-- Password Confirm -->
                 <label class="control-label" for="password_confirm">Password (Confirm)</label>
                 <div class="controls">
                     <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge password_confirm">
@@ -44,22 +53,60 @@
                 </div>
             </div>
 
-
-
             <div class="control-group">
-                <!-- Password -->
-                <label class="control-label" for="securityq">Enter a security question: </label>
+                <!-- Street (name) -->
+                <label class="control-label" for="street">Street Name</label>
                 <div class="controls">
-                    <input type="text" id="securityquestion" runat="server" placeholder="Enter your security question" class="input-xlarge" />
+                    <input type="text" runat="server" id="street" class="input-xlarge street"/>
+                    <p class="help-block">Please enter your street name</p>
                 </div>
             </div>
+
             <div class="control-group">
-                <!-- Password -->
-                <label class="control-label" for="securityans">Enter your answer here:</label>
+                <!-- Street number -->
+                <label class="control-label" for="streetNumber">Street Number</label>
                 <div class="controls">
-                    <input type="text" id="securityanswer" runat="server" placeholder="Enter your answer" class="input-xlarge" />
+                    <input type="text" runat="server" id="streetNumber" class="input-xlarge streetNumber"/>
+                    <p class="help-block">Please enter your street number</p>
                 </div>
             </div>
+
+            <div class="control-group">
+                <!-- PostalCode -->
+                <label class="control-label" for="postalCode">Postal Code</label>
+                <div class="controls">
+                    <input type="text" runat="server" id="postalCode" class="input-xlarge postalCode"/>
+                    <p class="help-block">Please enter your postal code</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <!-- City -->
+                <label class="control-label" for="city">City</label>
+                <div class="controls">
+                    <input type="text" runat="server" id="city" class="input-xlarge city"/>
+                    <p class="help-block">Please enter your city</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <!-- Telephone -->
+                <label class="control-label" for="telephone">Telephone</label>
+                <div class="controls">
+                    <input type="text" runat="server" id="telephone" class="input-xlarge telephone"/>
+                    <p class="help-block">Please enter your telephone number</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <!-- Country -->
+                <label class="control-label" for="streetNumber">Country</label>
+                <div class="controls">
+                    <input type="text" runat="server" id="country" class="input-xlarge contry"/>
+                    <p class="help-block">Please enter your country</p>
+                </div>
+            </div>
+
             <div class="control-group">
                 <!-- Button -->
                 <div class="controls">
@@ -72,7 +119,7 @@
     </form>
     <script>
         function validateFields() {
-            if ($(".fullname").val() == "" || $(".email").val() == "" || $("#securityquestion").val() == "" || $("#securityanswer").val() == "") {
+            if ($(".firstName").val() == "" || $(".email").val() == "" || $("#lastName").val() == "" || $("#street").val() == "") {
                 $(".errorMsg").html("Fill in all fileds");
                 return false;
             }

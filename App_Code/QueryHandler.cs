@@ -93,40 +93,6 @@ public class QueryHandler
 
 
     #endregion
-
-    /*
-    public string GetSecurityQuestion(string email)
-    {
-        //Opening Sql Connection
-        string connectionString =
-            ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
-        MySqlConnection conn = new MySqlConnection(connectionString);
-        MySqlCommand command = conn.CreateCommand();
-        MySqlDataReader reader;
-
-        try
-        {
-            conn.Open();
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Connection cant be opened.");
-        }
-
-        command.CommandText = String.Format("Select SecurityQuestion, email from users inner join UsersLogin where UsersLogin.Email = \'{0}\'",
-                           email);
-        reader = command.ExecuteReader();
-        reader.Read();
-
-        string securityQuestion = reader.GetValue(0).ToString();
-
-        reader.Close();
-        conn.Close();
-        return securityQuestion;
-    }*/
-
-
-
     public string GetUserDetails(string email, string password)
     {
         //Opening Sql Connection
@@ -145,7 +111,7 @@ public class QueryHandler
             throw new ApplicationException("Connection cant be opened.");
         }
 
-        command.CommandText = String.Format("Select FirstName from Users inner join UsersLogin where UsersLogin.Email = \'{0}\' and UsersLogin.Password = \'{1}\'", email, password);
+        command.CommandText = String.Format("Select FirstName,Email,Password from Users inner join UsersLogin where UsersLogin.Email = \'{0}\' and UsersLogin.Password = \'{1}\'", email, password);
         reader = command.ExecuteReader();
         reader.Read();
 
@@ -245,8 +211,7 @@ public class QueryHandler
         }
     }
     #endregion
-
-    public bool CheckAnswer(string answer)
+    /*public bool CheckAnswer(string answer)
     {
         //Opening Sql Connection
         string connectionString =
@@ -278,9 +243,9 @@ public class QueryHandler
         reader.Close();
         conn.Close();
         return false;
-    }
+    }*/
 
-    public bool Signup(string fullname, string email, string password, string securityQuestion, string securityAnswer)
+    public bool Signup(string FirstName,string LastName, string email, string password, string street, string streetNumber, string postalCode, string city, string telephone, string country)
     {
         //Opening Sql Connection
         string connectionString =
@@ -299,7 +264,7 @@ public class QueryHandler
         }
 
         //Check to make sure the user does not exist in database
-        command.CommandText = String.Format("Select UserId from users where Email = \'{0}\'",
+        command.CommandText = String.Format("Select ID from UsersLogin where UsersLogin.Email = \'{0}\'",
                            email);
         reader = command.ExecuteReader();
         reader.Read();
@@ -313,8 +278,7 @@ public class QueryHandler
         {
             reader.Close();
             //insert the new user to the database
-            command.CommandText = String.Format("INSERT INTO users (Fullname,Email,Password,SecurityQuestion,SecurityAnswer) VALUES (\'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\')",
-                               fullname, email, password, securityQuestion, securityAnswer);
+            command.CommandText = String.Format("INSERT INTO Users (FirstName, LastName) VALUES (\'{0}\',\'{1}\'); INSERT INTO UsersDetails (Street, StreetNumber, PostalCode, City, Telephone, Country) VALUES (\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\'); INSERT INTO UsersLogin (email, password) VALUES (\'{8}\',\'{9}\');", FirstName, LastName,street, streetNumber, postalCode, city, telephone, country, email, password);
             reader = command.ExecuteReader();
 
             reader.Close();

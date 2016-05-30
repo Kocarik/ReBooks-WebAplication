@@ -56,7 +56,7 @@ public partial class login : System.Web.UI.Page
 
     }
 
-    [WebMethod]
+    /*[WebMethod]
     public static string CheckAnswer(string answer)
     {
         QueryHandler query = new QueryHandler();
@@ -66,7 +66,7 @@ public partial class login : System.Web.UI.Page
             HttpContext.Current.Session["Verified"] = true;
         }
         return rightAnswer ? "true" : "false";
-    }
+    }*/
 
 
     [WebMethod]
