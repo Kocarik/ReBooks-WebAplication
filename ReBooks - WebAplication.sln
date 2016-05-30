@@ -3,24 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ReBooks - WebAplication", ".", "{C75A34D9-41C3-43D6-AAEF-E3C6A65225A5}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ReBooks - WebAplication(1)", ".", "{649165A1-E7A1-4C82-8BA0-52063D5E579F}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_54510"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_55673"
 		Debug.AspNetCompiler.PhysicalPath = "..\ReBooks - WebAplication\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54510\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55673\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_54510"
+		Release.AspNetCompiler.VirtualPath = "/localhost_55673"
 		Release.AspNetCompiler.PhysicalPath = "..\ReBooks - WebAplication\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54510\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55673\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "54510"
+		VWDPort = "55673"
 		SlnRelativePath = "..\ReBooks - WebAplication\"
 	EndProjectSection
 EndProject
@@ -29,8 +29,8 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C75A34D9-41C3-43D6-AAEF-E3C6A65225A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C75A34D9-41C3-43D6-AAEF-E3C6A65225A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{649165A1-E7A1-4C82-8BA0-52063D5E579F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{649165A1-E7A1-4C82-8BA0-52063D5E579F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
