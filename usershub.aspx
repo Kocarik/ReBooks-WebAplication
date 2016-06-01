@@ -15,7 +15,8 @@
                         <th width="20%">Book author</th>
                         <th width="20%">Category</th>
                         <th width="20%">Language</th>
-                        <th>Lent</th>
+                        <th width="10%">Status</th>
+                        <th width="10%">Reserve</th>
                     </tr>
                 </table>
                 <div runat="server" id="itemPlaceHolder"></div>
@@ -33,7 +34,8 @@
                             <td width="20%"><%#Eval("Author") %></td>
                             <td width="20%"><%#Eval("IDCategory") %></td>
                             <td width="20%"><%#Eval("IDLanguage") %></td>
-                            <td><%#Eval("Lent") %></td>
+                            <td width="10%"><%#Eval("Lent") %></td>
+                            <td width="10%"><asp:Button ID="btnReserve" runat="server" Text="Reserve" /></td>
                         </tr>
                         <tr>
                             <td colspan="6">
