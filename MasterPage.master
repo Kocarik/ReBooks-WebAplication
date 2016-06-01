@@ -11,12 +11,11 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
-
 </head>
 <body>
     <div class="container-full">
         <header>
-            <img src="images/ReBooksLogo.png" alt="ReBooks" />
+            <a href="login.aspx"><img src="images/ReBooksLogo.png" alt="ReBooks" /></a>
         </header>
         <ul class="nav nav-tabs generalNavBar">
             <li id="signupLink"><a href="signup.aspx">Signup</a></li>
@@ -27,15 +26,16 @@
         </ul>
         <div class="row">
             <div class="col-sm-1"></div>
-            <div class="col-sm-10 mainContentColumn" style="margin: 20px auto 20px auto;">
+            <div class="col-sm-10 mainContentColumn" style="">
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
             <div class="col-sm-1"></div>
         </div>
-        <footer>ReBooks.com &copy; 2016 | All rights reserved</footer>
+        <footer>ReBooks.com &copy; 2016 All rights reserved</footer>
     </div>
     <script>
+
         var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
         if (40 + $("mainContentColumn").height() + $("header").height() + $("footer").height() < h) {
             $("mainContentColumn").height((h - $("header").height() - $("footer").height() - 40));

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="69ba00378e7a4be4aa12f6ef6404a154" Name="Diagram1">
+        <EntityTypeShape EntityType="ReBooksDBModel.BookCategory" Width="1.5" PointX="0.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReBooksDBModel.BookLanguage" Width="1.5" PointX="0.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReBooksDBModel.Book" Width="1.5" PointX="2.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReBooksDBModel.BooksDetail" Width="1.5" PointX="5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReBooksDBModel.Loan" Width="1.5" PointX="7.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReBooksDBModel.User" Width="1.5" PointX="5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReBooksDBModel.UsersDetail" Width="1.5" PointX="7.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReBooksDBModel.UsersLogin" Width="1.5" PointX="7.25" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="ReBooksDBModel.One_Category_Has_More_Books" ManuallyRouted="false" />
+        <AssociationConnector Association="ReBooksDBModel.One_Language_Has_More_Books" ManuallyRouted="false" />
+        <AssociationConnector Association="ReBooksDBModel.BooksDetails_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="ReBooksDBModel.One_Book_Has_Max_5_Loans" ManuallyRouted="false" />
+        <AssociationConnector Association="ReBooksDBModel.One_User_Has_Max_5_Loans" ManuallyRouted="false" />
+        <AssociationConnector Association="ReBooksDBModel.One_User_Has_One_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="ReBooksDBModel.One_User_Has_One_Login" ManuallyRouted="false" />
+        <AssociationConnector Association="ReBooksDBModel.ReservedBooks" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

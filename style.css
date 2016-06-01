@@ -1,24 +1,64 @@
 ﻿body {
 }
 
-footer {    
+footer {
     background-color: #1352D2;
     color: white;
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     clear: both;
+    margin-top: 20px;
 }
 
- header{
-        text-align: center;
-        border-bottom: 1px solid #ddd;
-        padding: 20px;
- }
+header {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding: 20px;
+}
 
- #signupLink{
-     margin-right: 20px; float: right;
- }
+#signupLink {
+    margin-right: 20px;
+    float: right;
+}
 
- #loginLink{
-     margin-right: 20px; float: right;
- }
+#loginLink {
+    margin-right: 20px;
+    float: right;
+}
+
+.collapse {
+    background-position: left -172px;
+    height: 17px;
+    width: 16px;
+    background-repeat: no-repeat;
+    background-image: url('images/DXR.png');
+    cursor: pointer;
+    display:block;
+}
+
+.expand {
+    background-position: -14px -187px;
+    height: 17px;
+    width: 16px;
+    background-repeat: no-repeat;
+    background-image: url('images/DXR.png');
+    cursor: pointer;
+}
+
+table {
+    border: solid 1px black;
+}
+
+table td {
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
+}
+
+table th {
+    border-bottom: solid 1px black;
+}
+
+.SUBDIV table {
+    border: 0px;
+    border-left: 1px solid black;
+}

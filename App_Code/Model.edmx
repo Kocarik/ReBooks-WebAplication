@@ -1,0 +1,628 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ReBooksDBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BookCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookLanguage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LanguageName" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Books">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookName" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Author" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Lent" Type="enum" Nullable="false" />
+          <Property Name="IDCategory" Type="int" Nullable="false" />
+          <Property Name="IDLanguage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BooksDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="mediumblob" />
+          <Property Name="Description" Type="mediumtext" Nullable="false" />
+          <Property Name="ISBN" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Publisher" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Loans">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateLoan" Type="date" Nullable="false" />
+          <Property Name="DateReturn" Type="date" Nullable="false" />
+          <Property Name="IDBook" Type="int" />
+          <Property Name="IDUser" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.ReBooksDB.ReservedBooks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ReservedBooks">
+          <Key>
+            <PropertyRef Name="IDBook" />
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDBook" Type="int" Nullable="false" />
+          <Property Name="IDUser" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="Avatar" Type="mediumblob" />
+          <Property Name="ResetPasswordCode" Type="int" />
+        </EntityType>
+        <EntityType Name="UsersDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Street" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="StreetNumber" Type="int" Nullable="false" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Telephone" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersLogin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserRole" Type="enum" Nullable="false" />
+          <Property Name="Active" Type="enum" />
+        </EntityType>
+        <Association Name="BooksDetails_ibfk_1">
+          <End Role="Books" Type="Self.Books" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BooksDetails" Type="Self.BooksDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BooksDetails">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One Book Has Max 5 Loans">
+          <End Role="Books" Type="Self.Books" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Loans" Type="Self.Loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Loans">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One Category Has More Books">
+          <End Role="BookCategory" Type="Self.BookCategory" Multiplicity="1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="IDCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One Language Has More Books">
+          <End Role="BookLanguage" Type="Self.BookLanguage" Multiplicity="1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookLanguage">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="IDLanguage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One User Has Max 5 Loans">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Loans" Type="Self.Loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Loans">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One User Has One Details">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersDetails" Type="Self.UsersDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersDetails">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One User Has One Login">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersLogin" Type="Self.UsersLogin" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersLogin">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReservedBooks_ibfk_1">
+          <End Role="Books" Type="Self.Books" Multiplicity="1" />
+          <End Role="ReservedBooks" Type="Self.ReservedBooks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservedBooks">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReservedBooks_ibfk_2">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ReservedBooks" Type="Self.ReservedBooks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservedBooks">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ReBooksDBModelStoreContainer">
+          <EntitySet Name="BookCategory" EntityType="Self.BookCategory" Schema="ReBooksDB" store:Type="Tables" />
+          <EntitySet Name="BookLanguage" EntityType="Self.BookLanguage" Schema="ReBooksDB" store:Type="Tables" />
+          <EntitySet Name="Books" EntityType="Self.Books" Schema="ReBooksDB" store:Type="Tables" />
+          <EntitySet Name="BooksDetails" EntityType="Self.BooksDetails" Schema="ReBooksDB" store:Type="Tables" />
+          <EntitySet Name="Loans" EntityType="Self.Loans" Schema="ReBooksDB" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="ReBooksDB" store:Type="Tables" />
+          <EntitySet Name="UsersDetails" EntityType="Self.UsersDetails" Schema="ReBooksDB" store:Type="Tables" />
+          <EntitySet Name="UsersLogin" EntityType="Self.UsersLogin" Schema="ReBooksDB" store:Type="Tables" />
+          <EntitySet Name="ReservedBooks" EntityType="Self.ReservedBooks" store:Type="Tables" store:Schema="ReBooksDB">
+            <DefiningQuery>SELECT
+`ReservedBooks`.`IDBook`, 
+`ReservedBooks`.`IDUser`
+FROM `ReservedBooks` AS `ReservedBooks`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="BooksDetails_ibfk_1" Association="Self.BooksDetails_ibfk_1">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="BooksDetails" EntitySet="BooksDetails" />
+          </AssociationSet>
+          <AssociationSet Name="One Book Has Max 5 Loans" Association="Self.One Book Has Max 5 Loans">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Loans" EntitySet="Loans" />
+          </AssociationSet>
+          <AssociationSet Name="One Category Has More Books" Association="Self.One Category Has More Books">
+            <End Role="BookCategory" EntitySet="BookCategory" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="One Language Has More Books" Association="Self.One Language Has More Books">
+            <End Role="BookLanguage" EntitySet="BookLanguage" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="One User Has Max 5 Loans" Association="Self.One User Has Max 5 Loans">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Loans" EntitySet="Loans" />
+          </AssociationSet>
+          <AssociationSet Name="One User Has One Details" Association="Self.One User Has One Details">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+          </AssociationSet>
+          <AssociationSet Name="One User Has One Login" Association="Self.One User Has One Login">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersLogin" EntitySet="UsersLogin" />
+          </AssociationSet>
+          <AssociationSet Name="ReservedBooks_ibfk_1" Association="Self.ReservedBooks_ibfk_1">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="ReservedBooks" EntitySet="ReservedBooks" />
+          </AssociationSet>
+          <AssociationSet Name="ReservedBooks_ibfk_2" Association="Self.ReservedBooks_ibfk_2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ReservedBooks" EntitySet="ReservedBooks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ReBooksDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BookCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.One_Category_Has_More_Books" FromRole="BookCategory" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="BookLanguage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LanguageName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.One_Language_Has_More_Books" FromRole="BookLanguage" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Lent" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDCategory" Type="Int32" Nullable="false" />
+          <Property Name="IDLanguage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BookCategory" Relationship="Self.One_Category_Has_More_Books" FromRole="Books" ToRole="BookCategory" />
+          <NavigationProperty Name="BookLanguage" Relationship="Self.One_Language_Has_More_Books" FromRole="Books" ToRole="BookLanguage" />
+          <NavigationProperty Name="BooksDetail" Relationship="Self.BooksDetails_ibfk_1" FromRole="Books" ToRole="BooksDetails" />
+          <NavigationProperty Name="Loans" Relationship="Self.One_Book_Has_Max_5_Loans" FromRole="Books" ToRole="Loans" />
+          <NavigationProperty Name="Users" Relationship="Self.ReservedBooks" FromRole="Books" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="BooksDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ISBN" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Publisher" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="Self.BooksDetails_ibfk_1" FromRole="BooksDetails" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="Loan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateLoan" Type="DateTime" Nullable="false" />
+          <Property Name="DateReturn" Type="DateTime" Nullable="false" />
+          <Property Name="IDBook" Type="Int32" />
+          <Property Name="IDUser" Type="Int32" />
+          <NavigationProperty Name="Book" Relationship="Self.One_Book_Has_Max_5_Loans" FromRole="Loans" ToRole="Books" />
+          <NavigationProperty Name="User" Relationship="Self.One_User_Has_Max_5_Loans" FromRole="Loans" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" />
+          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ResetPasswordCode" Type="Int32" />
+          <NavigationProperty Name="Loans" Relationship="Self.One_User_Has_Max_5_Loans" FromRole="Users" ToRole="Loans" />
+          <NavigationProperty Name="UsersDetail" Relationship="Self.One_User_Has_One_Details" FromRole="Users" ToRole="UsersDetails" />
+          <NavigationProperty Name="UsersLogin" Relationship="Self.One_User_Has_One_Login" FromRole="Users" ToRole="UsersLogin" />
+          <NavigationProperty Name="Books" Relationship="Self.ReservedBooks" FromRole="Users" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="UsersDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StreetNumber" Type="Int32" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.One_User_Has_One_Details" FromRole="UsersDetails" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UsersLogin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserRole" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="Self.One_User_Has_One_Login" FromRole="UsersLogin" ToRole="Users" />
+        </EntityType>
+        <Association Name="One_Category_Has_More_Books">
+          <End Role="BookCategory" Type="Self.BookCategory" Multiplicity="1" />
+          <End Role="Books" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="IDCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One_Language_Has_More_Books">
+          <End Role="BookLanguage" Type="Self.BookLanguage" Multiplicity="1" />
+          <End Role="Books" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookLanguage">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="IDLanguage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BooksDetails_ibfk_1">
+          <End Role="Books" Type="Self.Book" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BooksDetails" Type="Self.BooksDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BooksDetails">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One_Book_Has_Max_5_Loans">
+          <End Role="Books" Type="Self.Book" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Loans" Type="Self.Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Loans">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One_User_Has_Max_5_Loans">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Loans" Type="Self.Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Loans">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One_User_Has_One_Details">
+          <End Role="Users" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersDetails" Type="Self.UsersDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersDetails">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="One_User_Has_One_Login">
+          <End Role="Users" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersLogin" Type="Self.UsersLogin" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersLogin">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReservedBooks">
+          <End Role="Books" Type="Self.Book" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ReBooksDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BookCategories" EntityType="Self.BookCategory" />
+          <EntitySet Name="BookLanguages" EntityType="Self.BookLanguage" />
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="BooksDetails" EntityType="Self.BooksDetail" />
+          <EntitySet Name="Loans" EntityType="Self.Loan" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UsersDetails" EntityType="Self.UsersDetail" />
+          <EntitySet Name="UsersLogins" EntityType="Self.UsersLogin" />
+          <AssociationSet Name="One_Category_Has_More_Books" Association="Self.One_Category_Has_More_Books">
+            <End Role="BookCategory" EntitySet="BookCategories" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="One_Language_Has_More_Books" Association="Self.One_Language_Has_More_Books">
+            <End Role="BookLanguage" EntitySet="BookLanguages" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="BooksDetails_ibfk_1" Association="Self.BooksDetails_ibfk_1">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="BooksDetails" EntitySet="BooksDetails" />
+          </AssociationSet>
+          <AssociationSet Name="One_Book_Has_Max_5_Loans" Association="Self.One_Book_Has_Max_5_Loans">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Loans" EntitySet="Loans" />
+          </AssociationSet>
+          <AssociationSet Name="One_User_Has_Max_5_Loans" Association="Self.One_User_Has_Max_5_Loans">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Loans" EntitySet="Loans" />
+          </AssociationSet>
+          <AssociationSet Name="One_User_Has_One_Details" Association="Self.One_User_Has_One_Details">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersDetails" EntitySet="UsersDetails" />
+          </AssociationSet>
+          <AssociationSet Name="One_User_Has_One_Login" Association="Self.One_User_Has_One_Login">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersLogin" EntitySet="UsersLogins" />
+          </AssociationSet>
+          <AssociationSet Name="ReservedBooks" Association="Self.ReservedBooks">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ReBooksDBModelStoreContainer" CdmEntityContainer="ReBooksDBEntities">
+          <EntitySetMapping Name="BookCategories">
+            <EntityTypeMapping TypeName="ReBooksDBModel.BookCategory">
+              <MappingFragment StoreEntitySet="BookCategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookLanguages">
+            <EntityTypeMapping TypeName="ReBooksDBModel.BookLanguage">
+              <MappingFragment StoreEntitySet="BookLanguage">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LanguageName" ColumnName="LanguageName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="ReBooksDBModel.Book">
+              <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Lent" ColumnName="Lent" />
+                <ScalarProperty Name="IDCategory" ColumnName="IDCategory" />
+                <ScalarProperty Name="IDLanguage" ColumnName="IDLanguage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BooksDetails">
+            <EntityTypeMapping TypeName="ReBooksDBModel.BooksDetail">
+              <MappingFragment StoreEntitySet="BooksDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loans">
+            <EntityTypeMapping TypeName="ReBooksDBModel.Loan">
+              <MappingFragment StoreEntitySet="Loans">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DateLoan" ColumnName="DateLoan" />
+                <ScalarProperty Name="DateReturn" ColumnName="DateReturn" />
+                <ScalarProperty Name="IDBook" ColumnName="IDBook" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ReBooksDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersDetails">
+            <EntityTypeMapping TypeName="ReBooksDBModel.UsersDetail">
+              <MappingFragment StoreEntitySet="UsersDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersLogins">
+            <EntityTypeMapping TypeName="ReBooksDBModel.UsersLogin">
+              <MappingFragment StoreEntitySet="UsersLogin">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ReservedBooks" TypeName="ReBooksDBModel.ReservedBooks" StoreEntitySet="ReservedBooks">
+            <EndProperty Name="Books">
+              <ScalarProperty Name="ID" ColumnName="IDBook" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="ID" ColumnName="IDUser" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

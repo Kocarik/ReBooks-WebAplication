@@ -1,8 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="signup.aspx.cs" Inherits="signup" MasterPageFile="~/MasterPage.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-    </style>
     <form runat="server" class="form-horizontal" style="text-align: center">
         <fieldset>
             <div class="well-lg" style="text-align: center; font-size: 30px; color: red">
@@ -30,7 +28,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="email">E-mail</label>
                 <div class="controls">
-                    <input runat="server" type="email" id="email" name="email" class="input-xlarge email">
+                    <input runat="server" type="email" id="email" name="email" class="input-xlarge email" />
                     <p class="help-block">Please provide your E-mail</p>
                 </div>
             </div>
@@ -39,7 +37,7 @@
                 <!-- Password-->
                 <label class="control-label" for="password">Password</label>
                 <div class="controls">
-                    <input runat="server" type="password" id="password" name="password" class="input-xlarge password">
+                    <input runat="server" type="password" id="password" name="password" class="input-xlarge password"/>
                     <p class="help-block">Password should be at least 4 characters</p>
                 </div>
             </div>
@@ -48,7 +46,7 @@
                 <!-- Password Confirm -->
                 <label class="control-label" for="password_confirm">Password (Confirm)</label>
                 <div class="controls">
-                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge password_confirm">
+                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge password_confirm"/>
                     <p class="help-block">Please confirm password</p>
                 </div>
             </div>
