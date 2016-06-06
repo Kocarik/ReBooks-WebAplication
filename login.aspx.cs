@@ -13,6 +13,7 @@ public partial class login : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         Session["Email"] = null;
+        Session["userID"] = null;
         Session["LoggedIn"] = "";
         Session["ID"] = null;
         Session["FirstName"] = null;
@@ -49,8 +50,9 @@ public partial class login : System.Web.UI.Page
             else
             {
                 string userDetails = query.GetUserDetails(email, password);
+                string userID = query.getUserID(email);
 
-                Session["ID"] = userDetails;
+                Session["userID"] = userID;
                 Session["FirstName"] = userDetails;
                 Session["LastName"] = userDetails;
                 Session["LoggedIn"] = "true";

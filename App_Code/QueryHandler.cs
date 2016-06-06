@@ -89,10 +89,9 @@ public class QueryHandler
         conn.Close();
         return false;
     }
-
-
-
     #endregion
+
+    #region
     public string GetUserDetails(string email, string password)
     {
         string userDetails = null;
@@ -126,7 +125,9 @@ public class QueryHandler
         conn.Close();
         return userDetails;
     }
+    #endregion
 
+    #region
     public string SetResetPasswordCode()
     {
         //Opening Sql Connection
@@ -158,6 +159,7 @@ public class QueryHandler
         conn.Close();
         return response;
     }
+    #endregion
 
     public bool ValidateResetCode(string code)
     {
@@ -250,6 +252,7 @@ public class QueryHandler
         return false;
     }*/
 
+    #region
     public bool Signup(string FirstName,string LastName, string email, string password, string street, string streetNumber, string postalCode, string city, string telephone, string country)
     {
         //Opening Sql Connection
@@ -291,7 +294,9 @@ public class QueryHandler
             return false;
         }
     }
+    #endregion
 
+    #region
     public string UpdatePassword(string newPass)
     {
         //Opening Sql Connection
@@ -325,5 +330,116 @@ public class QueryHandler
         response = "Your password is updated successfully.";
         return response;
     }
+    #endregion
+
+    #region
+    public string getPublisher(string bookID)
+    {
+        string publiser = null;
+
+        //Opening Sql Connection
+        string connectionString =
+            ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
+        MySqlConnection conn = new MySqlConnection(connectionString);
+        MySqlCommand command = conn.CreateCommand();
+        MySqlDataReader reader;
+
+        try
+        {
+            conn.Open();
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Connection cant be opened.");
+        }
+
+        command.CommandText = String.Format("Select publisher from BooksDetails where id like '" + bookID + "'");
+        reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            publiser = reader["publisher"].ToString();
+            return publiser;
+        }
+
+        reader.Close();
+        conn.Close();
+        return publiser;
+    }
+    #endregion
+
+    #region
+    public byte[] getImageBook(string bookID)
+    {
+        byte[] imageBytes = null;
+
+        //Opening Sql Connection
+        string connectionString =
+            ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
+        MySqlConnection conn = new MySqlConnection(connectionString);
+        MySqlCommand command = conn.CreateCommand();
+        MySqlDataReader reader;
+
+        try
+        {
+            conn.Open();
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Connection cant be opened.");
+        }
+
+        command.CommandText = String.Format("select Image from BooksDetails where ID = '" + bookID + "'");
+        reader = command.ExecuteReader();
+
+
+        while (reader.Read())
+        {
+            imageBytes = (byte[])reader["Image"];
+            return imageBytes;
+        }
+
+        reader.Close();
+        conn.Close();
+        return imageBytes;
+
+    }
+    #endregion
+
+    #region
+    public string getUserID(string email)
+    {
+        string userUD = null;
+
+        //Opening Sql Connection
+        string connectionString =
+            ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
+        MySqlConnection conn = new MySqlConnection(connectionString);
+        MySqlCommand command = conn.CreateCommand();
+        MySqlDataReader reader;
+
+        try
+        {
+            conn.Open();
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Connection cant be opened.");
+        }
+
+        command.CommandText = String.Format("Select id from UsersLogin where email like '" + email + "'");
+        reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            userUD = reader["id"].ToString();
+            return userUD;
+        }
+
+        reader.Close();
+        conn.Close();
+        return userUD;
+    }
+    #endregion
 
 }

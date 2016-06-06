@@ -10,7 +10,7 @@
         </div>
         <h3>Our Books</h3>
         <div>
-            <asp:ListView ID="ListView1" runat="server" DataKeyNames="ID" OnSelectedIndexChanging="ListView1_SelectedIndexChanging">
+            <asp:ListView ID="ListView1" runat="server" DataKeyNames="ID" OnSelectedIndexChanging="ListView1_SelectedIndexChanging" OnItemCommand="ListView1_ItemCommand">
 
                 <LayoutTemplate>
                     <table style="border: solid 2px #336699;" cellspacing="0" cellpadding="3" rules="all">
@@ -23,6 +23,7 @@
                             <th>Language</th>
                             <th>Status</th>
                             <th>Reserve</th>
+                            <th>View</th>
                         </tr>
                         <tbody>
                             <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
@@ -40,8 +41,11 @@
                         <td><%# Eval("Author")%></td>
                         <td><%# Eval("CategoryName")%></td>
                         <td><%# Eval("LanguageName")%></td>
-                        <td><%# Eval("Lent")%></td>
-                        <td><asp:Button ID="Button1" runat="server" Text="Button" /></td>
+                        <td><%# Eval("Borrowings")%></td>                    
+                        <td><asp:Button ID="viewBook" runat="server" Text="Button" /></td>
+                        <td>
+                            <asp:LinkButton ID="NameLabel" runat="server" Text='View More Details' CommandArgument='<%# Eval("ID")%>' OnClick="NameLabel_Click"/> 
+                        </td>
                     </tr>
                 </ItemTemplate>
 
@@ -56,8 +60,9 @@
                         <td><%# Eval("Author")%></td>
                         <td><%# Eval("CategoryName")%></td>
                         <td><%# Eval("LanguageName")%></td>
-                        <td><%# Eval("Lent")%></td>
+                        <td><%# Eval("Borrowings")%></td>
                         <td><asp:Button ID="Button1" runat="server" Text="Button" /></td>
+                        <td></td>
                     </tr>
                 </SelectedItemTemplate>
             </asp:ListView>
