@@ -76,7 +76,7 @@ public class QueryHandler
         }
 
         //Write the code to check if the user exists in the database
-        command.CommandText = String.Format("Select * from UsersLogin where Email = \'{0}\' and Password =\'{1}'", email, password);
+        command.CommandText = String.Format("Select email,password from UsersLogin where Email = \'{0}\' and Password =\'{1}'", email, password);
         reader = command.ExecuteReader();
         reader.Read();
         if (reader.HasRows)
@@ -95,6 +95,8 @@ public class QueryHandler
     #endregion
     public string GetUserDetails(string email, string password)
     {
+        string userDetails = null;
+
         //Opening Sql Connection
         string connectionString =
             ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
@@ -111,11 +113,14 @@ public class QueryHandler
             throw new ApplicationException("Connection cant be opened.");
         }
 
-        command.CommandText = String.Format("Select FirstName,Email,Password from Users inner join UsersLogin where UsersLogin.Email = \'{0}\' and UsersLogin.Password = \'{1}\'", email, password);
+        command.CommandText = String.Format("Select Users.ID,Users.FirstName,Users.Lastname,Email,Password from Users inner join UsersLogin on Users.ID = UsersLogin.ID where Email = \'{0}\' and Password = \'{1}\'", email, password);
         reader = command.ExecuteReader();
-        reader.Read();
 
-        string userDetails = reader.GetValue(0).ToString();
+        while (reader.Read())
+        {
+            userDetails = reader["id"].ToString() + reader["FirstName"].ToString() + reader["LastName"].ToString();
+            return userDetails;
+        }
 
         reader.Close();
         conn.Close();

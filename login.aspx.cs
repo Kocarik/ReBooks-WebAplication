@@ -14,6 +14,9 @@ public partial class login : System.Web.UI.Page
     {
         Session["Email"] = null;
         Session["LoggedIn"] = "";
+        Session["ID"] = null;
+        Session["FirstName"] = null;
+        Session["LastName"] = null;
     }
 
     protected void btnProceed_Click(object sender, EventArgs e)
@@ -47,8 +50,9 @@ public partial class login : System.Web.UI.Page
             {
                 string userDetails = query.GetUserDetails(email, password);
 
-                Session["Firstname"] = userDetails.Split(' ')[0];
-                Session["Fullname"] = userDetails;
+                Session["ID"] = userDetails;
+                Session["FirstName"] = userDetails;
+                Session["LastName"] = userDetails;
                 Session["LoggedIn"] = "true";
                 Response.Redirect("usershub.aspx");
             }

@@ -22,7 +22,7 @@
             <li id="loginLink"><a href="login.aspx">Login</a></li>
         </ul>
         <ul class="nav nav-tabs usershubNavBar" style="display: none">
-            <li style="margin-right: 20px; float: right"><a href="login.aspx">Logout</a></li>
+            <li id="logoutLink" style="margin-right: 20px; float: right"><a href="login.aspx">Logout</a></li>
         </ul>
         <div class="row">
             <div class="col-sm-1"></div>
@@ -41,7 +41,6 @@
             $("mainContentColumn").height((h - $("header").height() - $("footer").height() - 40));
         }
 
-
         $(function () {
             if ('<%=Session["LoggedIn"]%>' == "") {
                 $("#loginLink").css("display", "block");
@@ -50,6 +49,9 @@
                 $(".usershubNavBar").css("display", "block");
                 $(".generalNavBar").css("display", "none");
                 $("#loginLink").css("display", "none");
+                $("#logoutLink").click(function () {                   
+                    sessionStorage.clear();
+                });
             }
         });
 

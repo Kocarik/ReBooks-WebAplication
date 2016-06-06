@@ -12,43 +12,38 @@ public partial class usershub : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        lblUserID.Text = (string)Session["FirstName"];
+
         if (!IsPostBack)
         {
-            populatedata();
+            BindData();
         }
+
+    }
+
+    private void BindData()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["myDatabaseConnectionString"].ConnectionString;
+        string query = "SELECT *,CategoryName,LanguageName From Books INNER JOIN BookCategory ON Books.IDCategory = BookCategory.ID INNER JOIN BookLanguage ON Books.IDLanguage = BookLanguage.ID";
+
+        MySqlDataAdapter data = new MySqlDataAdapter(query, connectionString);
+        System.Data.DataTable table = new System.Data.DataTable();
+
+        data.Fill(table);
+
+        ListView1.DataSource = table;
+        ListView1.DataBind();
     }
 
 
-    private void populatedata()
-    {
-        using (ReBooksDBEntities dc = new ReBooksDBEntities())
-        {
-            var v = dc.Books.ToList();
-            ListView1.DataSource = v;
-            ListView1.DataBind();
-        }
-    }
 
-    protected void ListView1_ItemDataBound(object sender, ListViewItemEventArgs e)
+    protected void ListView1_SelectedIndexChanging(object sender, ListViewSelectEventArgs e)
     {
-        if(e.Item.ItemType == ListViewItemType.DataItem)
-        {
-            ListViewDataItem lvItem = (ListViewDataItem)e.Item;
-            Book book = (Book)lvItem.DataItem;
-            if (book != null)
-            {
-                GridView gv1 = (GridView)e.Item.FindControl("GridView1");
-                if(gv1 != null)
-                {
-                    using(ReBooksDBEntities dc = new ReBooksDBEntities())
-                    {
-                        var v = dc.BooksDetails.Where(a => a.ID.Equals(book.ID)).ToList();
-                        gv1.DataSource = v;
-                        gv1.DataBind();
-                    }
-                }
+        ListView1.SelectedIndex = e.NewSelectedIndex;
+        string bookID = ListView1.SelectedDataKey.Value.ToString();
 
-            }
-        }
+        lblBookID.Text = "Selected Book ID: " + bookID;
+
+        BindData();
     }
 }
