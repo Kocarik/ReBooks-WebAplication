@@ -19,10 +19,9 @@
                             <th>Book ID</th>
                             <th>Book Name</th>
                             <th>Author</th>
-                            <th>Categpry</th>
-                            <th>Language</th>
+                            <th>Book Category</th>
+                            <th>Book Language</th>
                             <th>Status</th>
-                            <th>Reserve</th>
                             <th>View</th>
                         </tr>
                         <tbody>
@@ -42,7 +41,6 @@
                         <td><%# Eval("CategoryName")%></td>
                         <td><%# Eval("LanguageName")%></td>
                         <td><%# Eval("Borrowings")%></td>                    
-                        <td><asp:Button ID="viewBook" runat="server" Text="Button" /></td>
                         <td>
                             <asp:LinkButton ID="NameLabel" runat="server" Text='View More Details' CommandArgument='<%# Eval("ID")%>' OnClick="NameLabel_Click"/> 
                         </td>
@@ -61,8 +59,10 @@
                         <td><%# Eval("CategoryName")%></td>
                         <td><%# Eval("LanguageName")%></td>
                         <td><%# Eval("Borrowings")%></td>
-                        <td><asp:Button ID="Button1" runat="server" Text="Button" /></td>
-                        <td></td>
+                        <td>
+                            <asp:LinkButton ID="NameLabel" runat="server" Text='View More Details' CommandArgument='<%# Eval("ID")%>' OnClick="NameLabel_Click"/> 
+                        </td>
+
                     </tr>
                 </SelectedItemTemplate>
             </asp:ListView>
