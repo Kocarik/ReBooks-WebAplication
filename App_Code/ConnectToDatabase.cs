@@ -183,4 +183,97 @@ public class ConnectToDatabase
         return false;
     }
 
+    /// <summary>
+    /// after users registration, his data will be saved to database, and admin must confirm, or refuse his request
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
+    /// <param name="email"></param>
+    /// <param name="password"></param>
+    /// <param name="telephone"></param>
+    /// <param name="birthDate"></param>
+    /// <param name="street"></param>
+    /// <param name="streetNumber"></param>
+    /// <param name="city"></param>
+    /// <param name="postalCode"></param>
+    /// <param name="country"></param>
+    /// <param name="image"></param>
+    /// <param name="code"></param>
+    /// <returns></returns>
+    public bool writeUserAsInactive(string firstName, string lastName, string email, string password, string telephone, System.DateTime birthDate, string street, int streetNumber, string city, string postalCode, string country, byte[] image, string code)
+    {
+        try
+        {
+            if (openConnection())
+            {
+
+                string sqlQuery = "insert into Users (FirstName, LastName, BirthDate, Avatar, ResetPasswordCode) "
+                    + "values (@firstName, @lastName, @birthDate, @Avatar, @code)";
+
+                MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
+                cmd.Parameters.AddWithValue("@firstName", firstName);
+                cmd.Parameters.AddWithValue("@lastName", lastName);
+                cmd.Parameters.AddWithValue("@birthDate", (birthDate.Year + "-" + birthDate.Month + "-" + birthDate.Day));
+                cmd.Parameters.AddWithValue("@Avatar", image);
+                cmd.Parameters.AddWithValue("@code", code);
+                cmd.ExecuteNonQuery();
+
+                sqlQuery = "insert into UsersLogin (email, password, Active) "
+                    + "values (@email, @password, @active)";
+                cmd = new MySqlCommand(sqlQuery, connection);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@active", "waiting");
+                cmd.ExecuteNonQuery();
+
+                sqlQuery = "insert into UsersDetails (Street, StreetNumber, PostalCode, City, Telephone, Country) "
+                    + "values (@street, @streetnumber, @postalcode, @city, @telephone, @country)";
+                cmd = new MySqlCommand(sqlQuery, connection);
+                cmd.Parameters.AddWithValue("@street", street);
+                cmd.Parameters.AddWithValue("@streetnumber", streetNumber);
+                cmd.Parameters.AddWithValue("@postalcode", postalCode);
+                cmd.Parameters.AddWithValue("@city", city);
+                cmd.Parameters.AddWithValue("@telephone", telephone);
+                cmd.Parameters.AddWithValue("@country", country);
+
+                cmd.ExecuteNonQuery();
+                closeConnection();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Write(ex.ToString());
+            return false;
+        }
     }
+
+
+    /// <summary>
+    /// get field of image
+    /// </summary>
+    /// <returns></returns>
+    public byte[] getDefaultImage()
+    {
+        byte[] image = null;
+        if (openConnection())
+        {
+            string sqlQuery = "select Image from DefaultUserImage";
+            MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                image = (byte[])reader["Image"];
+            }
+            closeConnection();
+            return image;
+        }
+        return image;
+    }
+
+}

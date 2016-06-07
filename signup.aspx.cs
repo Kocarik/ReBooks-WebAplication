@@ -8,6 +8,8 @@ using System.Web.UI.WebControls;
 
 public partial class signup : System.Web.UI.Page
 {
+    private byte[] image;
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -25,7 +27,9 @@ public partial class signup : System.Web.UI.Page
         {
             Session["Email"] = email.Value;
             QueryHandler query = new QueryHandler();
-            Boolean userAlreadyExists = query.Signup(firstName.Value,lastName.Value, email.Value, password.Value, street.Value, streetNumber.Value, postalCode.Value, city.Value, telephone.Value, country.Value);
+            ConnectToDatabase db = new ConnectToDatabase();
+            image = db.getDefaultImage();
+            Boolean userAlreadyExists = query.Signup(firstName.Value,lastName.Value, image, email.Value, password.Value, street.Value, streetNumber.Value, postalCode.Value, city.Value, telephone.Value, country.Value);
             if (userAlreadyExists)
             {
                 errorMsg.InnerHtml = "You are already a member. Try resetting your password on Login page";
@@ -34,9 +38,9 @@ public partial class signup : System.Web.UI.Page
             {
                 if (Request.QueryString["rurl"] != "appointee.aspx" && Request.QueryString["rurl"] == null)
                 {
-
                     Session["FirstName"] = firstName.Value;
                     Session["LastName"] = lastName.Value;
+                    Session["email"] = email.Value;
                     Session["LoggedIn"] = "true";
                     Response.Redirect("usershub.aspx");
                 }

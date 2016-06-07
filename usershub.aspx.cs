@@ -10,8 +10,17 @@ using System.Web.UI.WebControls;
 
 public partial class usershub : System.Web.UI.Page
 {
+    string userID;
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        QueryHandler db = new QueryHandler();
+
+        string firstName = Session["FirstName"].ToString();
+        string email = Session["email"].ToString();
+        userID = db.getUserID(email);
+        Session["userID"] = userID;
+
         if (!IsPostBack)
         {
             BindData();
@@ -46,6 +55,7 @@ public partial class usershub : System.Web.UI.Page
     protected void NameLabel_Click(object sender, EventArgs e)
     {
         var link = sender as LinkButton;
+        Session["userID"] = userID;
         Session["bookID"] = link.CommandArgument;
         Session["LoggedIn"] = "true";
         Response.Redirect("bookdetailsbyid.aspx?");

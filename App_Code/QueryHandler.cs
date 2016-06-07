@@ -250,7 +250,7 @@ public class QueryHandler
     }*/
 
     #region
-    public bool Signup(string FirstName,string LastName, string email, string password, string street, string streetNumber, string postalCode, string city, string telephone, string country)
+    public bool Signup(string FirstName,string LastName, byte[] image, string email, string password, string street, string streetNumber, string postalCode, string city, string telephone, string country)
     {
         //Opening Sql Connection
         string connectionString =
@@ -283,7 +283,7 @@ public class QueryHandler
         {
             reader.Close();
             //insert the new user to the database
-            command.CommandText = String.Format("INSERT INTO Users (FirstName, LastName) VALUES (\'{0}\',\'{1}\'); INSERT INTO UsersDetails (Street, StreetNumber, PostalCode, City, Telephone, Country) VALUES (\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\'); INSERT INTO UsersLogin (email, password) VALUES (\'{8}\',\'{9}\');", FirstName, LastName,street, streetNumber, postalCode, city, telephone, country, email, password);
+            command.CommandText = String.Format("INSERT INTO Users (FirstName, LastName, Avatar) VALUES (\'{0}\',\'{1}\',\'{2}\'); INSERT INTO UsersDetails (Street, StreetNumber, PostalCode, City, Telephone, Country) VALUES (\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\',\'{8}\'); INSERT INTO UsersLogin (email, password) VALUES (\'{9}\',\'{10}\');", FirstName, LastName, image ,street, streetNumber, postalCode, city, telephone, country, email, password);
             reader = command.ExecuteReader();
 
             reader.Close();
