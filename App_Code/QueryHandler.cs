@@ -16,6 +16,7 @@ public class QueryHandler
         this.Email = email;
     }
 
+
     //check if the user exists in the database
     #region
     public bool UserExists(string email)
@@ -50,11 +51,7 @@ public class QueryHandler
         return false;
 
     }
-
-  
-
     #endregion
-
 
     //Verifying user
     #region
@@ -441,5 +438,4 @@ public class QueryHandler
         return userUD;
     }
     #endregion
-
 }

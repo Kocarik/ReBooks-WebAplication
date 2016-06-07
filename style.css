@@ -52,6 +52,7 @@ table {
 table td {
     border-right: solid 1px black;
     border-bottom: solid 1px black;
+    padding:4px;
 }
 
 table th {
@@ -69,4 +70,18 @@ table th {
 
 .booklist20 {
     width:20%;
+}
+
+.txtAreaBookDescription {
+    background-color:white;
+    border:0px;
+}
+
+#singlebookDetails {
+    margin-top:10px;
+}
+
+#breadcumbs {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

@@ -12,8 +12,6 @@ public partial class usershub : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        lblUserID.Text = Session["userID"].ToString();
-
         if (!IsPostBack)
         {
             BindData();
@@ -41,23 +39,15 @@ public partial class usershub : System.Web.UI.Page
     {
         ListView1.SelectedIndex = e.NewSelectedIndex;
         string bookID = ListView1.SelectedDataKey.Value.ToString();
-
-        lblBookID.Text = "Selected Book ID: " + bookID;
-
         BindData();
     }
-
-    protected void ListView1_ItemCommand(object sender, ListViewCommandEventArgs e)
-    {
-
-    }
-
 
     //Use session
     protected void NameLabel_Click(object sender, EventArgs e)
     {
         var link = sender as LinkButton;
         Session["bookID"] = link.CommandArgument;
+        Session["LoggedIn"] = "true";
         Response.Redirect("bookdetailsbyid.aspx?");
     }
 

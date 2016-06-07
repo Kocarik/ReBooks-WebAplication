@@ -10,6 +10,8 @@ using System.Web.UI.WebControls;
 
 public partial class login : System.Web.UI.Page
 {
+    ConnectToDatabase dbcon = new ConnectToDatabase();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Session["Email"] = null;
@@ -32,7 +34,7 @@ public partial class login : System.Web.UI.Page
         {
             Session["Email"] = email;
             QueryHandler query = new QueryHandler();
-            Boolean userVerified = query.VerifyUser(email, password);
+            Boolean userVerified = dbcon.VerifyUser(email, password);
 
             if (!userVerified)
             {
