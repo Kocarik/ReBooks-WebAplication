@@ -33,6 +33,17 @@
                 </div>
             </div>
 
+              <div class="control-group">
+                <!-- Date of Birth -->
+                <label class="control-label" for="dateOfBirth">Date of Birth</label>
+                <div class="controls">
+                    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+<asp:TextBox ID="txtDateOfBirth" runat="server"></asp:TextBox><asp:ImageButton ID="btnImageCalendar" runat="server" Height="23px" ImageUrl="~/images/calendar.png" Width="27px" />
+                    <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server" Format="yyyy-MM-dd" PopupButtonID="btnImageCalendar" PopupPosition="BottomRight" TargetControlID="txtDateOfBirth" />
+                    <p class="help-block">Please provide your date of birth</p>
+                </div>
+            </div>
+
             <div class="control-group">
                 <!-- Password-->
                 <label class="control-label" for="password">Password</label>

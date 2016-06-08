@@ -26,10 +26,9 @@ public partial class signup : System.Web.UI.Page
         else
         {
             Session["Email"] = email.Value;
-            QueryHandler query = new QueryHandler();
             ConnectToDatabase db = new ConnectToDatabase();
             image = db.getDefaultImage();
-            Boolean userAlreadyExists = query.Signup(firstName.Value,lastName.Value, image, email.Value, password.Value, street.Value, streetNumber.Value, postalCode.Value, city.Value, telephone.Value, country.Value);
+            Boolean userAlreadyExists = db.writeUserAsInactive(firstName.Value, lastName.Value, email.Value, password.Value, telephone.Value, txtDateOfBirth.Text, street.Value, int.Parse(streetNumber.Value), city.Value, postalCode.Value, country.Value, image);
             if (userAlreadyExists)
             {
                 errorMsg.InnerHtml = "You are already a member. Try resetting your password on Login page";

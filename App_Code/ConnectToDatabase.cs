@@ -14,7 +14,7 @@ public class ConnectToDatabase
 
     // defaul constructor
     public ConnectToDatabase()
-    { 
+    {
         string connectionString = ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
         connection = new MySqlConnection(connectionString);
     }
@@ -200,55 +200,46 @@ public class ConnectToDatabase
     /// <param name="image"></param>
     /// <param name="code"></param>
     /// <returns></returns>
-    public bool writeUserAsInactive(string firstName, string lastName, string email, string password, string telephone, System.DateTime birthDate, string street, int streetNumber, string city, string postalCode, string country, byte[] image, string code)
+    public bool writeUserAsInactive(string firstName, string lastName, string email, string password, string telephone, string birthDate, string street, int streetNumber, string city, string postalCode, string country, byte[] image)
     {
-        try
+        if (openConnection())
         {
-            if (openConnection())
-            {
 
-                string sqlQuery = "insert into Users (FirstName, LastName, BirthDate, Avatar, ResetPasswordCode) "
-                    + "values (@firstName, @lastName, @birthDate, @Avatar, @code)";
+            string sqlQuery = "insert into Users (FirstName, LastName, BirthDate, Avatar) "
+                + "values (@firstName, @lastName, @birthDate, @Avatar)";
 
-                MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
-                cmd.Parameters.AddWithValue("@firstName", firstName);
-                cmd.Parameters.AddWithValue("@lastName", lastName);
-                cmd.Parameters.AddWithValue("@birthDate", (birthDate.Year + "-" + birthDate.Month + "-" + birthDate.Day));
-                cmd.Parameters.AddWithValue("@Avatar", image);
-                cmd.Parameters.AddWithValue("@code", code);
-                cmd.ExecuteNonQuery();
+            MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
+            cmd.Parameters.AddWithValue("@firstName", firstName);
+            cmd.Parameters.AddWithValue("@lastName", lastName);
+            cmd.Parameters.AddWithValue("@birthDate", birthDate);
+            cmd.Parameters.AddWithValue("@Avatar", image);
+            cmd.ExecuteNonQuery();
 
-                sqlQuery = "insert into UsersLogin (email, password, Active) "
-                    + "values (@email, @password, @active)";
-                cmd = new MySqlCommand(sqlQuery, connection);
-                cmd.Parameters.AddWithValue("@email", email);
-                cmd.Parameters.AddWithValue("@password", password);
-                cmd.Parameters.AddWithValue("@active", "waiting");
-                cmd.ExecuteNonQuery();
+            sqlQuery = "insert into UsersLogin (email, password, Active) "
+                + "values (@email, @password, @active)";
+            cmd = new MySqlCommand(sqlQuery, connection);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@active", "waiting");
+            cmd.ExecuteNonQuery();
 
-                sqlQuery = "insert into UsersDetails (Street, StreetNumber, PostalCode, City, Telephone, Country) "
-                    + "values (@street, @streetnumber, @postalcode, @city, @telephone, @country)";
-                cmd = new MySqlCommand(sqlQuery, connection);
-                cmd.Parameters.AddWithValue("@street", street);
-                cmd.Parameters.AddWithValue("@streetnumber", streetNumber);
-                cmd.Parameters.AddWithValue("@postalcode", postalCode);
-                cmd.Parameters.AddWithValue("@city", city);
-                cmd.Parameters.AddWithValue("@telephone", telephone);
-                cmd.Parameters.AddWithValue("@country", country);
+            sqlQuery = "insert into UsersDetails (Street, StreetNumber, PostalCode, City, Telephone, Country) "
+                + "values (@street, @streetnumber, @postalcode, @city, @telephone, @country)";
+            cmd = new MySqlCommand(sqlQuery, connection);
+            cmd.Parameters.AddWithValue("@street", street);
+            cmd.Parameters.AddWithValue("@streetnumber", streetNumber);
+            cmd.Parameters.AddWithValue("@postalcode", postalCode);
+            cmd.Parameters.AddWithValue("@city", city);
+            cmd.Parameters.AddWithValue("@telephone", telephone);
+            cmd.Parameters.AddWithValue("@country", country);
 
-                cmd.ExecuteNonQuery();
-                closeConnection();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.Write(ex.ToString());
+            cmd.ExecuteNonQuery();
+            closeConnection();
             return false;
+        }
+        else
+        {
+            return true;
         }
     }
 
