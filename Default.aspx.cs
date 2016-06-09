@@ -11,8 +11,8 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Session["userID"] = null;
-        Session["LoggedIn"] = null;
+        Session["userID"] = "";
+        Session["LoggedIn"] = "";
 
         if (!IsPostBack)
         {
@@ -39,18 +39,17 @@ public partial class _Default : System.Web.UI.Page
     //Use session
     protected void ViewMoreInfo_Click(object sender, EventArgs e)
     {
-        Session["userID"] = null;
-        Session["LoggedIn"] = null;
+        Session["userID"] = "";
+        Session["LoggedIn"] = "";
         var link = sender as LinkButton;
         Session["bookID"] = link.CommandArgument;
         Response.Redirect("bookdetailsbyid.aspx?");
     }
 
-    protected void ListView1_SelectedIndexChanging(object sender, ListViewSelectEventArgs e)
+    protected void OnPagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
     {
-        ListView1.SelectedIndex = e.NewSelectedIndex;
-        string bookID = ListView1.SelectedDataKey.Value.ToString();
-        BindData();
+        (ListView1.FindControl("DataPager1") as DataPager).SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+        this.BindData();
     }
 
 }

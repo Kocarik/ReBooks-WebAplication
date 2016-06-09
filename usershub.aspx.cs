@@ -15,11 +15,9 @@ public partial class usershub : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["userID"] == null && Session["LoggedIn"] == null)
+        if (Session["userID"].ToString() == "" && Session["LoggedIn"].ToString() == "")
         {
-            Session["userID"] = "";
-            Session["LoggedIn"] = "";
-            Response.Redirect("login.aspx");
+
         }
 
         else
@@ -53,21 +51,36 @@ public partial class usershub : System.Web.UI.Page
         ListView1.DataBind();
     }
 
-
-
-    protected void ListView1_SelectedIndexChanging(object sender, ListViewSelectEventArgs e)
+    protected void OnPagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
     {
-        ListView1.SelectedIndex = e.NewSelectedIndex;
-        string bookID = ListView1.SelectedDataKey.Value.ToString();
-        BindData();
+        (ListView1.FindControl("DataPager1") as DataPager).SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+        this.BindData();
     }
 
     //Use session
     protected void NameLabel_Click(object sender, EventArgs e)
     {
-        var link = sender as LinkButton;
-        Session["userID"] = userID;
-        Session["bookID"] = link.CommandArgument;
-        Response.Redirect("bookdetailsbyid.aspx?");
+        if (Session["LoggedIn"].ToString() == "")
+        {
+            Session["userID"] = "";
+            var link = sender as LinkButton;
+            Session["bookID"] = link.CommandArgument;
+            Response.Redirect("bookdetailsbyid.aspx?");
+
+        }
+
+        else if (Session["LoggedIn"].ToString() == "true")
+        {
+            Session["userID"] = userID;
+            var link = sender as LinkButton;
+            Session["bookID"] = link.CommandArgument;
+            Response.Redirect("bookdetailsbyid.aspx?");
+
+        }
+
+        //var link = sender as LinkButton;
+        //Session["userID"] = userID;
+        //Session["bookID"] = link.CommandArgument;
+        //Response.Redirect("bookdetailsbyid.aspx?");
     }
 }

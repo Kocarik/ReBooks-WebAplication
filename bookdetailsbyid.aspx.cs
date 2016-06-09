@@ -10,14 +10,16 @@ public partial class bookdetailsbyid : System.Web.UI.Page
     QueryHandler db = new QueryHandler();
     ConnectToDatabase dbcon = new ConnectToDatabase();
     string userID;
+    string bookID;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["userID"] == null && Session["LoggedIn"] == null)
+        bookID = Session["bookID"].ToString();
+
+        if (Session["userID"].ToString() == "" || Session["LoggedIn"].ToString() == "")
         {
-            Session["userID"] = "";
-            Session["LoggedIn"] = "";
             btnReserve.Visible = false;
+            lblReserveStatus.Visible = false;
         }
 
         else
@@ -25,10 +27,14 @@ public partial class bookdetailsbyid : System.Web.UI.Page
             Session["LoggedIn"] = "true";
             userID = Session["userID"].ToString();
             btnReserve.Visible = true;
+            lblReserveStatus.Visible = false;
+            linkBtnSignUp.Visible = false;
+            linkBtnSinIn.Visible = false;
+            reserveComing.Visible = false;
         }
 
-        Label1.Text = userID;
-        string bookID = Session["bookID"].ToString();
+        Label1.Text = "User ID: " + userID;
+        Label2.Text = "Book ID: " + bookID;
         string bookName, author, lent, categoryID, languageID, desc, publisher, category, language, loan;
         string[] descrpition;
 
@@ -79,12 +85,45 @@ public partial class bookdetailsbyid : System.Web.UI.Page
 
         if (dbcon.reserveBook(bookID, userID))
         {
-            lblReserve.Text = "Reservation sucesfull";
+            lblReserveStatus.Visible = true;
+            lblReserveStatus.Text = "Reservation sucesfull!";
         }
 
         else
         {
-            lblReserve.Text = "Reservation unsucesfull";
+            lblReserveStatus.Visible = true;
+            lblReserveStatus.Text = "Reservation unsucesfull! Oops.";
+        }
+    }
+
+    protected void btnBackToList_Click(object sender, EventArgs e)
+    {
+        if(Session["LoggedIn"].ToString() == "")
+        {
+            Session["userID"] = "";
+        }
+
+        else if (Session["LoggedIn"].ToString() == "true")
+        {
+            Session["userID"] = userID;
+        }
+
+        Response.Redirect("usershub.aspx");
+    }
+
+    protected void linkBtnSignUp_Click(object sender, EventArgs e)
+    {
+        if (Session["LoggedIn"].ToString() == "")
+        {
+            Response.Redirect("signup.aspx");
+        }
+    }
+
+    protected void linkBtnSinIn_Click(object sender, EventArgs e)
+    {
+        if (Session["LoggedIn"].ToString() == "")
+        {
+            Response.Redirect("login.aspx");
         }
     }
 }

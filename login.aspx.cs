@@ -17,7 +17,6 @@ public partial class login : System.Web.UI.Page
         Session["Email"] = null;
         Session["userID"] = null;
         Session["LoggedIn"] = null;
-        Session["ID"] = null;
         Session["FirstName"] = null;
         Session["LastName"] = null;
     }
