@@ -200,18 +200,19 @@ public class ConnectToDatabase
     /// <param name="image"></param>
     /// <param name="code"></param>
     /// <returns></returns>
-    public bool writeUserAsInactive(string firstName, string lastName, string email, string password, string telephone, string birthDate, string street, int streetNumber, string city, string postalCode, string country, byte[] image)
+    public bool writeUserAsInactive(string firstName, string lastName, string email, string password, string telephone, string birthDate, string street, int streetNumber, string city, string postalCode, string country, byte[] image, string code)
     {
         if (openConnection())
         {
 
-            string sqlQuery = "insert into Users (FirstName, LastName, BirthDate, Avatar) "
-                + "values (@firstName, @lastName, @birthDate, @Avatar)";
+            string sqlQuery = "insert into Users (FirstName, LastName, BirthDate, Avatar, ResetPasswordCode) "
+                + "values (@firstName, @lastName, @birthDate, @Avatar, @ResetPasswordCode)";
 
             MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
             cmd.Parameters.AddWithValue("@firstName", firstName);
             cmd.Parameters.AddWithValue("@lastName", lastName);
             cmd.Parameters.AddWithValue("@birthDate", birthDate);
+            cmd.Parameters.AddWithValue("@ResetPasswordCode", code);
             cmd.Parameters.AddWithValue("@Avatar", image);
             cmd.ExecuteNonQuery();
 
@@ -265,6 +266,63 @@ public class ConnectToDatabase
             return image;
         }
         return image;
+    }
+
+    /// <summary>
+    /// get password code, for verification, if generated password code is taken
+    /// </summary>
+    /// <param name="code"></param>
+    /// <returns></returns>
+    public bool isCodeTaken(string code)
+    {
+        if (openConnection())
+        {
+            string sqlQuery = "select ResetPasswordCode from Users";
+            MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                if (code.Equals(reader["ResetPasswordCode"].ToString()))
+                {
+                    closeConnection();
+                    return true;
+                }
+            }
+            closeConnection();
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// verify is user waiting return true, and loginform show error user
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public bool ifUserWaiting(string email, string password)
+    {
+        if (openConnection())
+        {
+            string status = "waiting";
+
+            string sqlQuery = "select email, password, active from UsersLogin where email like '" + email + "' and password like '" + password + "' and active like '" + status + "' ";
+            MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if (reader["email"] + "" == email && reader["password"] + "" == password && reader["active"] + "" == status)
+                {
+                    closeConnection();
+                    return true;
+                }
+            }
+
+        }
+
+        closeConnection();
+        return false;
     }
 
 }

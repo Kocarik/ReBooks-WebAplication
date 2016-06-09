@@ -28,17 +28,17 @@
                     <asp:Label ID="Lent" runat="server" Text="Book Publisher"></asp:Label>
                 </div>
                   <div>
-                      <textarea runat="server" cols="40" rows="4" id="txtAreaDescription" disabled="disabled" class="txtAreaBookDescription"></textarea>
+                      <textarea runat="server" cols="60" rows="4" id="txtAreaDescription" class="txtAreaBookDescription" readonly="readonly"></textarea>
                 </div>
                 <div>
                     <asp:Button ID="btnReserve" runat="server" Text="Reserve" OnClick="btnReserve_Click" />
                 </div>
             </div>
-            <div>
+            <div id="reserve status">
                 <asp:Label ID="lblReserve" runat="server" Text="Reserve status after click button"></asp:Label>
             </div>
         </form>
     <script> 
-        $('#txtAreaDescription').autogrow();
+        $("textarea").height($("textarea")[0].scrollHeight);
     </script>
 </asp:Content>

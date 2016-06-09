@@ -26,10 +26,17 @@ public partial class login : System.Web.UI.Page
     {
         String email = txtEmail.Value;
         String password = txtPassword.Value;
-        if (email == "" || password == "")
+
+        if (dbcon.ifUserWaiting(email, password))
+        {
+            errorInfo.Text = "First Admin must accept your registration!";
+        }
+
+        else if (email == "" || password == "")
         {
             errorInfo.Text = "Please fill in the details";
         }
+
         else
         {
             Session["Email"] = email;
@@ -51,12 +58,8 @@ public partial class login : System.Web.UI.Page
             }
             else
             {
-                string userDetails = query.GetUserDetails(email, password);
                 string userID = query.getUserID(email);
-
                 Session["userID"] = userID;
-                Session["FirstName"] = userDetails;
-                Session["LastName"] = userDetails;
                 Session["LoggedIn"] = "true";
                 Response.Redirect("usershub.aspx");
             }

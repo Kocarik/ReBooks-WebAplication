@@ -15,8 +15,6 @@ public partial class usershub : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         QueryHandler db = new QueryHandler();
-
-        string firstName = Session["FirstName"].ToString();
         string email = Session["email"].ToString();
         userID = db.getUserID(email);
         Session["userID"] = userID;
