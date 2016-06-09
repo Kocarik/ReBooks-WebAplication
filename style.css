@@ -5,7 +5,7 @@
 }
 
 .row {
-    margin-right: 0; 
+    margin-right: 0;
     margin-left: 0;
 }
 
@@ -23,20 +23,38 @@ header {
     border-bottom: 1px solid #ddd;
     padding: 20px;
 }
+
 .welcomeTitle {
     margin-top: 5px;
     margin-bottom: 5px;
-    text-align:center;
+    text-align: center;
     font-size: 32px;
-    text-transform:uppercase;
+    text-transform: uppercase;
 }
 
 .welcomeSubtitle {
     margin-top: 5px;
     margin-bottom: 5px;
-    text-align:center;
+    text-align: center;
     font-size: 28px;
-    text-transform:uppercase;
+    text-transform: uppercase;
+}
+
+.download{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.listOfBook {
+    border: solid 2px #1352D2;
+    width: 100%;
+}
+
+.listOfBookHeaderTable {
+    background-color: #1352D2;
+    color: White;
+    font-size: 15px;
+    padding:3px;
 }
 
 #homeLink {
@@ -82,15 +100,30 @@ table {
     border: solid 1px black;
 }
 
-    table td {
-        border-right: solid 1px black;
-        border-bottom: solid 1px black;
-        padding: 4px;
-    }
+table td {
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
+    padding: 5px;
+    width: auto;
+}
 
-    table th {
-        border-bottom: solid 1px black;
-    }
+table th {
+    border-bottom: solid 1px black;
+    width:auto;
+}
+
+table tbody {
+    width: 100%
+}
+
+.paging {
+    text-align:center;
+    font-size: 14px;
+}
+
+.bookCategoryandLang {
+    width: 10%;
+}
 
 .SUBDIV table {
     border: 0px;

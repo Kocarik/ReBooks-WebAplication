@@ -9,13 +9,13 @@
             <asp:ListView ID="ListView1" runat="server" DataKeyNames="ID" OnPagePropertiesChanging="OnPagePropertiesChanging">
 
                 <LayoutTemplate>
-                    <table style="border: solid 2px #336699;" cellspacing="0" cellpadding="3" rules="all">
-                        <tr style="background-color: #336699; color: White;">                           
+                    <table class="listOfBook">
+                        <tr class="listOfBookHeaderTable">                           
                             <th>ID</th>
                             <th>Book Name</th>
                             <th>Author</th>
-                            <th>Book Category</th>
-                            <th>Book Language</th>
+                            <th class="bookCategoryandLang">Category</th>
+                            <th class="bookCategoryandLang">Language</th>
                             <th>Status</th>
                             <th>View</th>
                         </tr>
@@ -42,8 +42,8 @@
                         <td><%# Eval("ID")%></td>
                         <td><%# Eval("BookName")%></td>
                         <td><%# Eval("Author")%></td>
-                        <td><%# Eval("CategoryName")%></td>
-                        <td><%# Eval("LanguageName")%></td>
+                        <td class="bookCategoryandLang"><%# Eval("CategoryName")%></td>
+                        <td class="bookCategoryandLang"><%# Eval("LanguageName")%></td>
                         <td><%# Eval("Borrowings")%></td>                    
                         <td>
                             <asp:LinkButton ID="NameLabel" runat="server" Text='View More Details' CommandArgument='<%# Eval("ID")%>' OnClick="NameLabel_Click"/> 
