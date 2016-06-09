@@ -15,7 +15,7 @@
 <body>
     <div class="container-full">
         <header>
-            <a href="#"><img src="images/ReBooksLogo.png" alt="ReBooks" /></a>
+            <a href="Default.aspx" id="logo"><img src="images/ReBooksLogo.png" alt="ReBooks" /></a>
         </header>
         <ul class="nav nav-tabs generalNavBar">
             <li id="homeLink"><a href="Default.aspx">Home</a></li>
@@ -44,11 +44,13 @@
         }
 
         $(function () {
-            if ('<%=Session["LoggedIn"]%>' == "") {
+            if ('<%=Session["LoggedIn"]%>' == "" || '<%=Session["LoggedIn"]%>' == null) {
                 $("#loginLink").css("display", "block");
                 $("#homeLink").css("display", "block");
+                $("#logo").attr("href", "Default.aspx");
             }
             else {
+                $("#logo").attr("href", "usershub.aspx");
                 $(".usershubNavBar").css("display", "block");
                 $(".generalNavBar").css("display", "none");
                 $("#loginLink").css("display", "none");

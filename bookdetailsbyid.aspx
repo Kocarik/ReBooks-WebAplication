@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <form id="bookDetails" runat="server">
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
             <div class="col-sm-6">
                 <div id="breadcumbs"><a href="usershub.aspx"><<< Back to List of Books</a></div>
                 <div>

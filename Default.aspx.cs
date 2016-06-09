@@ -11,13 +11,15 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Session["userID"] = "";
-        Session["LoggedIn"] = "";
+        Session["userID"] = null;
+        Session["LoggedIn"] = null;
 
         if (!IsPostBack)
         {
             BindData();
         }
+
+        Label1.Text = Convert.ToString(Session["LoggedIn"]);
     }
 
     private void BindData()
@@ -37,7 +39,8 @@ public partial class _Default : System.Web.UI.Page
     //Use session
     protected void ViewMoreInfo_Click(object sender, EventArgs e)
     {
-        Session["userID"] = "";
+        Session["userID"] = null;
+        Session["LoggedIn"] = null;
         var link = sender as LinkButton;
         Session["bookID"] = link.CommandArgument;
         Response.Redirect("bookdetailsbyid.aspx?");

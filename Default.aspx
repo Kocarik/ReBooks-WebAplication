@@ -4,6 +4,7 @@
 
     <form id="form1" runat="server">
         <div>
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
             <div class="welcomeTitle">WELCOME TO OUR WORLD ONLINE BOOK LIBRARY</div>
             <div class="welcomeSubtitle">Find your book and make reservation online</div>
             <asp:ListView ID="ListView1" runat="server" DataKeyNames="ID" OnSelectedIndexChanging="ListView1_SelectedIndexChanging">

@@ -9,22 +9,26 @@ public partial class bookdetailsbyid : System.Web.UI.Page
 {
     QueryHandler db = new QueryHandler();
     ConnectToDatabase dbcon = new ConnectToDatabase();
+    string userID;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["userID"] == "" || Session["userID"] == null)
+        if (Session["userID"] == null && Session["LoggedIn"] == null)
         {
+            Session["userID"] = "";
+            Session["LoggedIn"] = "";
             btnReserve.Visible = false;
         }
 
-        else if(Session["userID"] != "" || Session["userID"] != null)
+        else
         {
+            Session["LoggedIn"] = "true";
+            userID = Session["userID"].ToString();
             btnReserve.Visible = true;
         }
 
-        Session["LoggedIn"] = "true";
+        Label1.Text = userID;
         string bookID = Session["bookID"].ToString();
-        string userID = Session["userID"].ToString();
         string bookName, author, lent, categoryID, languageID, desc, publisher, category, language, loan;
         string[] descrpition;
 

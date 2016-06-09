@@ -11,18 +11,31 @@ using System.Web.UI.WebControls;
 public partial class usershub : System.Web.UI.Page
 {
     string userID;
+    string statusLogin;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        QueryHandler db = new QueryHandler();
-        string email = Session["email"].ToString();
-        userID = db.getUserID(email);
-        Session["userID"] = userID;
+        if (Session["userID"] == null && Session["LoggedIn"] == null)
+        {
+            Session["userID"] = "";
+            Session["LoggedIn"] = "";
+            Response.Redirect("login.aspx");
+        }
+
+        else
+        {
+            Session["userID"].ToString();
+            Session["LoggedIn"] = "true";
+            userID = Session["userID"].ToString();
+        }
 
         if (!IsPostBack)
         {
             BindData();
         }
+
+        Label1.Text = userID;
+        Label2.Text = Convert.ToString(Session["LoggedIn"]);
 
     }
 
@@ -55,9 +68,6 @@ public partial class usershub : System.Web.UI.Page
         var link = sender as LinkButton;
         Session["userID"] = userID;
         Session["bookID"] = link.CommandArgument;
-        Session["LoggedIn"] = "true";
         Response.Redirect("bookdetailsbyid.aspx?");
     }
-
-
 }
