@@ -4,6 +4,8 @@
 
     <form id="form1" runat="server">
         <div>
+            <div class="welcomeTitle">WELCOME TO OUR WORLD ONLINE BOOK LIBRARY</div>
+            <div class="welcomeSubtitle">Find your book and make reservation online</div>
             <asp:ListView ID="ListView1" runat="server" DataKeyNames="ID" OnSelectedIndexChanging="ListView1_SelectedIndexChanging">
                 <LayoutTemplate>
                     <table style="border: solid 2px #336699;" cellspacing="0" cellpadding="3" rules="all">

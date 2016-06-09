@@ -19,10 +19,12 @@
             <a href="#"><img src="images/ReBooksLogo.png" alt="ReBooks" /></a>
         </header>
         <ul class="nav nav-tabs generalNavBar">
+            <li id="homeLink"><a href="Default.aspx">Home</a></li>
             <li id="signupLink"><a href="signup.aspx">Signup</a></li>
             <li id="loginLink"><a href="login.aspx">Login</a></li>
         </ul>
         <ul class="nav nav-tabs usershubNavBar" style="display: none">
+            <li id="dashBoard"><a href="usershub.aspx">Dashboard</a></li>
             <li id="logoutLink" style="margin-right: 20px; float: right"><a href="login.aspx">Logout</a></li>
         </ul>
         <div class="row">
@@ -45,6 +47,7 @@
         $(function () {
             if ('<%=Session["LoggedIn"]%>' == "") {
                 $("#loginLink").css("display", "block");
+                $("#homeLink").css("display", "block");
             }
             else {
                 $(".usershubNavBar").css("display", "block");

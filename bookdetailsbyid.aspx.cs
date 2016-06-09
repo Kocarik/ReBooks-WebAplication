@@ -12,6 +12,16 @@ public partial class bookdetailsbyid : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["userID"] == "" || Session["userID"] == null)
+        {
+            btnReserve.Visible = false;
+        }
+
+        else if(Session["userID"] != "" || Session["userID"] != null)
+        {
+            btnReserve.Visible = true;
+        }
+
         Session["LoggedIn"] = "true";
         string bookID = Session["bookID"].ToString();
         string userID = Session["userID"].ToString();
