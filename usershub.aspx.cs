@@ -31,10 +31,6 @@ public partial class usershub : System.Web.UI.Page
         {
             BindData();
         }
-
-        Label1.Text = userID;
-        Label2.Text = Convert.ToString(Session["LoggedIn"]);
-
     }
 
     private void BindData()

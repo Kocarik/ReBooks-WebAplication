@@ -151,3 +151,18 @@ table tbody {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+#regButton{
+    text-align:center;
+}
+
+#reserveStatus {
+    font-size: large;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    text-transform: uppercase;
+    color: #6600FF;
+      margin-top: 5px;
+    margin-bottom: 5px;
+}

@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>ReBooks - Online Books Reservation</title>
+    <script src="https://use.fontawesome.com/149a3605cb.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -18,13 +19,13 @@
             <a href="Default.aspx" id="logo"><img src="images/ReBooksLogo.png" alt="ReBooks" /></a>
         </header>
         <ul class="nav nav-tabs generalNavBar">
-            <li id="homeLink"><a href="Default.aspx">Home</a></li>
-            <li id="signupLink"><a href="signup.aspx">Signup</a></li>
-            <li id="loginLink"><a href="login.aspx">Login</a></li>
+            <li id="homeLink"><a href="Default.aspx"><i class="fa fa-home fa-lg"> Home</i></a></li>
+            <li id="signupLink"><a href="signup.aspx"><i class="fa fa-user-plus fa-lg"> Sign Up</i></a></li>
+            <li id="loginLink"><a href="login.aspx"><i class="fa fa-sign-in fa-lg"> Sign In</i></a></li>
         </ul>
         <ul class="nav nav-tabs usershubNavBar" style="display: none">
-            <li id="dashBoard"><a href="usershub.aspx">Dashboard</a></li>
-            <li id="logoutLink" style="margin-right: 20px; float: right"><a href="login.aspx">Logout</a></li>
+            <li id="dashBoard"><a href="usershub.aspx"><i class="fa fa-home fa-lg"> Dashboard</i></a></li>
+            <li id="logoutLink" style="margin-right: 20px; float: right"><a href="login.aspx"><i class="fa fa-power-off fa-lg"> Logout</i></a></li>
         </ul>
         <div class="row">
             <div class="col-sm-1"></div>

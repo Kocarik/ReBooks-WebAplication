@@ -3,10 +3,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form runat="server" class="form-horizontal" style="text-align: center">
         <fieldset>
-            <div class="well-lg" style="text-align: center; font-size: 30px; color: red">
+              <div class="well-lg" style="text-align: center; font-size: 30px; color: red">
                 Register
             </div>
-            <div class="control-group">
+             <div class="col-sm-6" id="regLeft">
+                             <div class="control-group">
                 <!-- First name -->
                 <label class="control-label" for="firstName">First Name</label>
                 <div class="controls">
@@ -61,8 +62,9 @@
                     <p class="help-block">Please confirm password</p>
                 </div>
             </div>
-
-            <div class="control-group">
+             </div>
+            <div class="col-sm-6" id="regRight">
+                            <div class="control-group">
                 <!-- Street (name) -->
                 <label class="control-label" for="street">Street Name</label>
                 <div class="controls">
@@ -115,10 +117,11 @@
                     <p class="help-block">Please enter your country</p>
                 </div>
             </div>
+             </div>
 
-            <div class="control-group">
+            <div id="regButton">
                 <!-- Button -->
-                <div class="controls">
+                <div>
                     <asp:Button runat="server" CssClass="btn universalButton btnRegister" ID="btnRegister" CausesValidation="true" OnClick="btnRegister_ServerClick" OnClientClick="return validateFields();" Text="Register" />
                 </div>
             </div>

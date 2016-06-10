@@ -18,8 +18,6 @@ public partial class _Default : System.Web.UI.Page
         {
             BindData();
         }
-
-        Label1.Text = Convert.ToString(Session["LoggedIn"]);
     }
 
     private void BindData()

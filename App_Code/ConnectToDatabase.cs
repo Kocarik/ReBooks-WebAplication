@@ -325,4 +325,33 @@ public class ConnectToDatabase
         return false;
     }
 
+
+    /// <summary>
+    ///  delete reservation of book
+    /// </summary>
+    /// <param name="bookID"></param>
+    /// <param name="userID"></param>
+    /// <returns></returns>
+    public bool deleteReservation(string bookID, string userID)
+    {
+        if (openConnection())
+        {
+            string sqlQuery = "delete from ReservedBooks where IDBook = @IDBook and IDUser = @IDUser";
+            MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
+            cmd.Parameters.AddWithValue("@IDBook", bookID);
+            cmd.Parameters.AddWithValue("@IDUser", userID);
+            cmd.ExecuteNonQuery();
+
+            sqlQuery = "update Books set Borrowings = @borrowings where ID = " + bookID;
+            cmd = new MySqlCommand(sqlQuery, connection);
+            cmd.Parameters.AddWithValue("@borrowings", "free");
+            cmd.ExecuteNonQuery();
+
+
+            closeConnection();
+            return true;
+        }
+        return false;
+    }
+
 }

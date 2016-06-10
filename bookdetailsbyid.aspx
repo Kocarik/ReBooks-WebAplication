@@ -37,6 +37,9 @@
             <div>
                 <asp:Button ID="btnReserve" runat="server" Text="Reserve" OnClick="btnReserve_Click" />
             </div>
+            <div>
+                <asp:Button ID="btnDeleteReservation" runat="server" Text="Delete Reservation" OnClick="btnDeleteReservation_Click" />
+            </div>
             <div id="reserveStatus">
                 <asp:Label ID="lblReserveStatus" runat="server" Text="Reserve status after click button"></asp:Label>
             </div>

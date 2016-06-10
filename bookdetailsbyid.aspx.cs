@@ -14,6 +14,11 @@ public partial class bookdetailsbyid : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        Label1.Visible = false;
+        Label2.Visible = false;
+        btnDeleteReservation.Visible = false;
+        lblReserveStatus.Visible = false;
+
         bookID = Session["bookID"].ToString();
 
         if (Session["userID"].ToString() == "" || Session["LoggedIn"].ToString() == "")
@@ -27,7 +32,6 @@ public partial class bookdetailsbyid : System.Web.UI.Page
             Session["LoggedIn"] = "true";
             userID = Session["userID"].ToString();
             btnReserve.Visible = true;
-            lblReserveStatus.Visible = false;
             linkBtnSignUp.Visible = false;
             linkBtnSinIn.Visible = false;
             reserveComing.Visible = false;
@@ -86,7 +90,9 @@ public partial class bookdetailsbyid : System.Web.UI.Page
         if (dbcon.reserveBook(bookID, userID))
         {
             lblReserveStatus.Visible = true;
-            lblReserveStatus.Text = "Reservation sucesfull!";
+            lblReserveStatus.Text = "You have reserved this book";
+            btnReserve.Visible = false;
+            btnDeleteReservation.Visible = true;
         }
 
         else
@@ -124,6 +130,24 @@ public partial class bookdetailsbyid : System.Web.UI.Page
         if (Session["LoggedIn"].ToString() == "")
         {
             Response.Redirect("login.aspx");
+        }
+    }
+
+    protected void btnDeleteReservation_Click(object sender, EventArgs e)
+    {
+        string bookID = Session["bookID"].ToString();
+        string userID = Session["userID"].ToString();
+
+        if (dbcon.deleteReservation(bookID, userID))
+        {
+            lblReserveStatus.Visible = true;
+            lblReserveStatus.Text = "You have decline reservation";
+        }
+
+        else
+        {
+            lblReserveStatus.Visible = true;
+            lblReserveStatus.Text = "Not Decline!";
         }
     }
 }
