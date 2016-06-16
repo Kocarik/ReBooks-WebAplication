@@ -16,9 +16,12 @@ public class QueryHandler
         this.Email = email;
     }
 
-
-    //check if the user exists in the database
     #region
+    /// <summary>
+    /// check if the user exists in the database
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
     public bool UserExists(string email)
     {
         //Open Sql Connection
@@ -33,7 +36,7 @@ public class QueryHandler
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("Connection cant be opened");
+            throw new ApplicationException(ex.ToString());
         }
 
         //Wriute the code to check if the user exists in the database
@@ -53,42 +56,13 @@ public class QueryHandler
     }
     #endregion
 
-    //Verifying user
     #region
-    public bool VerifyUser(string email, string password)
-    {
-        //Open Sql Connection
-        string connectionString = ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
-        MySqlConnection conn = new MySqlConnection(connectionString);
-        MySqlCommand command = conn.CreateCommand();
-        MySqlDataReader reader;
-
-        try
-        {
-            conn.Open();
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Connection cant be opened");
-        }
-
-        //Write the code to check if the user exists in the database
-        command.CommandText = String.Format("Select email,password from UsersLogin where Email = \'{0}\' and Password =\'{1}'", email, password);
-        reader = command.ExecuteReader();
-        reader.Read();
-        if (reader.HasRows)
-        {
-            reader.Close();
-            conn.Close();
-            return true;
-        }
-        reader.Close();
-        conn.Close();
-        return false;
-    }
-    #endregion
-
-    #region
+    /// <summary>
+    /// get user information
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public string GetUserDetails(string email, string password)
     {
         string userDetails = null;
@@ -125,6 +99,10 @@ public class QueryHandler
     #endregion
 
     #region
+    /// <summary>
+    /// set reset password code into database
+    /// </summary>
+    /// <returns></returns>
     public string SetResetPasswordCode()
     {
         //Opening Sql Connection
@@ -158,6 +136,12 @@ public class QueryHandler
     }
     #endregion
 
+    #region
+    /// <summary>
+    /// validate reset code from e-mail
+    /// </summary>
+    /// <param name="code"></param>
+    /// <returns></returns>
     public bool ValidateResetCode(string code)
     {
         //Opening Sql Connection
@@ -173,7 +157,7 @@ public class QueryHandler
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("Connection cant be opened.");
+            throw new ApplicationException(ex.ToString());
         }
 
         command.CommandText = String.Format("Select * from Users inner join UsersLogin where Users.ResetPasswordCode = \'{0}\' and UsersLogin.Email = \'{1}\'", code, HttpContext.Current.Session["Email"].ToString());
@@ -189,9 +173,15 @@ public class QueryHandler
         conn.Close();
         return false;
     }
+    #endregion
 
-    //Get randomly generated string as a key for client and creator
     #region
+    /// <summary>
+    /// get randomly generated string as a key for user
+    /// </summary>
+    /// <param name="length"></param>
+    /// <param name="allowedChars"></param>
+    /// <returns></returns>
     string RandomString(int length, string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
     {
         const int byteSize = 0x100;
@@ -215,85 +205,13 @@ public class QueryHandler
         }
     }
     #endregion
-    /*public bool CheckAnswer(string answer)
-    {
-        //Opening Sql Connection
-        string connectionString =
-            ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
-        MySqlConnection conn = new MySqlConnection(connectionString);
-        MySqlCommand command = conn.CreateCommand();
-        MySqlDataReader reader;
-
-        try
-        {
-            conn.Open();
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Connection cant be opened.");
-        }
-
-        command.CommandText = String.Format("Select UserId from users where Email = \'{0}\' and SecurityAnswer = \'{1}\'",
-                           HttpContext.Current.Session["Email"].ToString(), answer);
-        reader = command.ExecuteReader();
-        reader.Read();
-
-        if (reader.HasRows)
-        {
-            reader.Close();
-            conn.Close();
-            return true;
-        }
-        reader.Close();
-        conn.Close();
-        return false;
-    }*/
 
     #region
-    public bool Signup(string FirstName,string LastName, byte[] image, string email, string password, string street, string streetNumber, string postalCode, string city, string telephone, string country)
-    {
-        //Opening Sql Connection
-        string connectionString =
-            ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
-        MySqlConnection conn = new MySqlConnection(connectionString);
-        MySqlCommand command = conn.CreateCommand();
-        MySqlDataReader reader;
-
-        try
-        {
-            conn.Open();
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Connection cant be opened.");
-        }
-
-        //Check to make sure the user does not exist in database
-        command.CommandText = String.Format("Select ID from UsersLogin where UsersLogin.Email = \'{0}\'",
-                           email);
-        reader = command.ExecuteReader();
-        reader.Read();
-        if (reader.HasRows)
-        {
-            reader.Close();
-            conn.Close();
-            return true;
-        }
-        else
-        {
-            reader.Close();
-            //insert the new user to the database
-            command.CommandText = String.Format("INSERT INTO Users (FirstName, LastName, Avatar) VALUES (\'{0}\',\'{1}\',\'{2}\'); INSERT INTO UsersDetails (Street, StreetNumber, PostalCode, City, Telephone, Country) VALUES (\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\',\'{8}\'); INSERT INTO UsersLogin (email, password) VALUES (\'{9}\',\'{10}\');", FirstName, LastName, image ,street, streetNumber, postalCode, city, telephone, country, email, password);
-            reader = command.ExecuteReader();
-
-            reader.Close();
-            conn.Close();
-            return false;
-        }
-    }
-    #endregion
-
-    #region
+    /// <summary>
+    /// update password
+    /// </summary>
+    /// <param name="newPass"></param>
+    /// <returns></returns>
     public string UpdatePassword(string newPass)
     {
         //Opening Sql Connection
@@ -330,6 +248,11 @@ public class QueryHandler
     #endregion
 
     #region
+    /// <summary>
+    /// get book publisher
+    /// </summary>
+    /// <param name="bookID"></param>
+    /// <returns></returns>
     public string getPublisher(string bookID)
     {
         string publiser = null;
@@ -366,6 +289,11 @@ public class QueryHandler
     #endregion
 
     #region
+    /// <summary>
+    /// get image book from database
+    /// </summary>
+    /// <param name="bookID"></param>
+    /// <returns></returns>
     public byte[] getImageBook(string bookID)
     {
         byte[] imageBytes = null;
@@ -404,6 +332,11 @@ public class QueryHandler
     #endregion
 
     #region
+    /// <summary>
+    /// get userID from database
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
     public string getUserID(string email)
     {
         string userUD = null;

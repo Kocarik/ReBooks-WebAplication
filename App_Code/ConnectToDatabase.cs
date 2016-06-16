@@ -12,7 +12,6 @@ public class ConnectToDatabase
 {
     public MySqlConnection connection;
 
-    // defaul constructor
     public ConnectToDatabase()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["mydatabaseConnectionString"].ConnectionString;
@@ -160,6 +159,12 @@ public class ConnectToDatabase
         return bookCategory;
     }
 
+    /// <summary>
+    /// verify user in login
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public bool VerifyUser(string email, string password)
     {
         if (openConnection())
